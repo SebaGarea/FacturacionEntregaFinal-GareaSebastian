@@ -12,22 +12,39 @@ import java.util.Optional;
 public class ProductoService {
 
     @Autowired
-    private ProductoRepository repository;
+    private ProductoRepository productoRepository;
 
     public ProductoService(ProductoRepository repository){
-        this.repository= repository;
+        this.productoRepository= repository;
     }
 
     public Producto save(Producto producto){
-        return repository.save(producto);
+        return productoRepository.save(producto);
     }
 
-    public List <Producto> getProductos(){
-        return repository.findAll();
+    public List <Producto> getProducts(){
+        return productoRepository.findAll();
     }
 
     public Optional<Producto> getById(Long id){
-        return repository.findById(id);
+        return productoRepository.findById(id);
+    }
+
+    public void deleteById(Long id) {
+        if (productoRepository.existsById(id)) {
+            productoRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Producto no encontrado con ID: " + id);
+        }
+    }
+    public void updateProductStock(Producto producto) {
+        System.out.println("Actualizando stock para el producto ID: " + producto.getId());
+        if (productoRepository.existsById(producto.getId())) {
+            productoRepository.save(producto);
+            System.out.println("Stock actualizado para el producto: " + producto.getId());
+        } else {
+            throw new RuntimeException("Producto no encontrado con ID: " + producto.getId());
+        }
     }
 
 }
