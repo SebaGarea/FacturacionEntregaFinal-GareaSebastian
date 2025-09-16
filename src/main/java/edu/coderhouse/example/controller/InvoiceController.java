@@ -106,12 +106,12 @@ public class InvoiceController {
                     throw new RuntimeException("Product not found with ID: " + item.getProducto().getId());
                 }
 
-                // Configura el producto del ítem
+
                 item.setProducto(productOpt.get());
                 item.setInvoice(invoice);
                 item.setSubtotal();
 
-                // Añade el ítem a la factura y actualiza el stock
+
                 invoiceService.addItemToInvoice(invoice, item);
             }
 
